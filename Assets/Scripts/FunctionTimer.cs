@@ -14,7 +14,7 @@ public class FunctionTimer
         this.action = action;
         this.timer = timer;
     }
-    void Update()
+    public void Update()
     {
         timer -= Time.deltaTime;
         if (timer < 0)

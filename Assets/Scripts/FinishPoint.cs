@@ -10,31 +10,31 @@ public class FinishPoint : MonoBehaviour
 {
     public TextMeshProUGUI label;
     FinishPoint instance;
-    FunctionTimer functionTimer;
-    
-    
+    bool collided = false;
     int currentScene;
-    float timer;
+    float timer=3f;
     void Start()
     {
         instance = this;
-        label.enabled = false;
-        new FunctionTimer();
-    }
-    void Update()
-    {
-        timer += Time.deltaTime; 
     }
     void OnTriggerEnter2D(Collider2D other)
     {
         label.enabled = true;
-         
-        {
-            currentScene = SceneManager.GetActiveScene().buildIndex;
-        }
-        
-
+        collided = true;
+        StartCoroutine(WaitForReloadScene());
     }
+    IEnumerator WaitForReloadScene()
+    {
+        yield return new WaitForSeconds(timer);
 
-
+        if (collided)
+        {
+            ReloadScene();
+        }
+    }
+    void ReloadScene()
+    {
+        currentScene = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentScene);
+    }
 }
