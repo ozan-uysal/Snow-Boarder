@@ -22,6 +22,7 @@ public class FinishPoint : MonoBehaviour
         label.enabled = true;
         collided = true;
         StartCoroutine(WaitForReloadScene());
+
     }
     IEnumerator WaitForReloadScene()
     {
@@ -32,7 +33,7 @@ public class FinishPoint : MonoBehaviour
             ReloadScene();
         }
     }
-    void ReloadScene()
+    public void ReloadScene()
     {
         currentScene = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentScene);
