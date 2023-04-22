@@ -6,28 +6,25 @@ using UnityEngine.SceneManagement;
 
 public class PlayerDie : MonoBehaviour
 {
-    PlayerDie instance;
-    GameObject player;
+    [SerializeField] GameObject player;
+    
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("dead bcs of this : " + other.name+ " hits to brain :)");
+        
 
-    void Start()
-    {
-        instance = this;
+        PlayerDieMethod();
+        Debug.Log("reload Starting");
+        Invoke("ReloadScene",3);
     }
-    void OnTriggerStay2D(Collider2D other)
-    {
-        Debug.Log(other.name);
-        player = instance.gameObject.GetComponentInParent<Transform>().gameObject;
-        Destroy(player, 3f);
-        if (player == null)
-        {
-            Debug.Log("reload Starting");
-            StartCoroutine(ReloadScene());
-        } 
-    }
-    IEnumerator ReloadScene()
+    void ReloadScene()
     {
         SceneManager.LoadScene(0);
-        yield return new WaitForSeconds(3f);
     }
+    void PlayerDieMethod()
+    {
+        player.SetActive(false);
+    }
+ 
 
 }

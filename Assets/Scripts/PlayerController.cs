@@ -7,9 +7,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rb2D;
-    PlayerController instance;
     bool _isGrounded;
-    [SerializeField] GameObject Onur;
+    [SerializeField] GameObject onur;
     bool doubleJump;
     bool canJump;
     Vector2 jumpPower;
@@ -18,18 +17,18 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] float torqueMultipler = 1f;
     [SerializeField] int forceAmountY = 1;
+    [SerializeField] int forceAmountX = 1;
     
     void Start()
     {
-        instance = this;
         _isGrounded = false;
         canJump = false;
     }
     void FixedUpdate()
     {
-       
         CharacterRotator();
         Jump();
+        PlayerAddForce();
     }
     void Update()
     {
@@ -46,7 +45,7 @@ public class PlayerController : MonoBehaviour
     }
     void Jump()
     {
-        _isGrounded = Onur.GetComponentInChildren<GroundCheck>().IsGrounded;
+        _isGrounded = onur.GetComponentInChildren<GroundCheck>().IsGrounded;
         //Debug.Log("DoubleJump = " + doubleJump);
         if (canJump)
         {
@@ -73,6 +72,8 @@ public class PlayerController : MonoBehaviour
     {
         float horizontalForce = -Input.GetAxis("Horizontal")*torqueMultipler;
         rb2D.AddTorque(horizontalForce,ForceMode2D.Force);
-        
+    }
+    void PlayerAddForce()
+    {
     }
 }
