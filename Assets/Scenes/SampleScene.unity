@@ -687,9 +687,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb2D: {fileID: 971489325}
-  Onur: {fileID: 971489321}
+  onur: {fileID: 971489321}
   torqueMultipler: 12
   forceAmountY: 300
+  forceAmountX: 8
 --- !u!58 &971489329
 CircleCollider2D:
   m_ObjectHideFlags: 0
