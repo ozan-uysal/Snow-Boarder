@@ -21,10 +21,9 @@ public class FinishPoint : MonoBehaviour
     {
         label.enabled = true;
         collided = true;
-        StartCoroutine(WaitForReloadScene());
-
+        StartCoroutine(WaitReloadScene());
     }
-    IEnumerator WaitForReloadScene()
+    IEnumerator WaitReloadScene()
     {
         yield return new WaitForSeconds(timer);
 

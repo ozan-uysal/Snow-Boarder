@@ -12,30 +12,28 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject Onur;
     bool doubleJump;
     bool canJump;
+    Vector2 jumpPower;
+
     //Vector2 playerVelocity;
 
-    [SerializeField] float torque = 1f;
+    [SerializeField] float torqueMultipler = 1f;
     [SerializeField] int forceAmountY = 1;
-    Vector2 jumpPower;
+    
     void Start()
     {
         instance = this;
         _isGrounded = false;
         canJump = false;
-        jumpPower = new Vector2(0, forceAmountY);
-
-        //playerVelocity =  instance.GetComponent<Rigidbody2D>().velocity;
     }
     void FixedUpdate()
     {
-        //_isGrounded = GameObject.Find("GroundCheck").GetComponent<GroundCheck>().IsGrounded;
-        RotateLeft();
-        RotateRight();
+       
+        CharacterRotator();
         Jump();
     }
     void Update()
     {
-        
+        jumpPower = new Vector2(0, forceAmountY);
 
         if (_isGrounded && !Input.GetButton("Jump"))
         {
@@ -46,34 +44,35 @@ public class PlayerController : MonoBehaviour
             canJump = true;
         }
     }
-    //void CharacterControll()
-    //{
-    //    RotateLeft();
-    //    RotateRight();
-    //    Jump();
-    //}
     void Jump()
     {
         _isGrounded = Onur.GetComponentInChildren<GroundCheck>().IsGrounded;
-        Debug.Log("DoubleJump = " + doubleJump);
+        //Debug.Log("DoubleJump = " + doubleJump);
         if (canJump)
         {
             rb2D.AddForce(jumpPower);
             doubleJump = !doubleJump;
+            canJump = false;
         }
     }
-    void RotateRight()
+    //void RotateRight()
+    //{
+    //   if (Input.GetKey(KeyCode.D))
+    //    {
+    //        rb2D.AddTorque(-torque,ForceMode2D.Force);
+    //    }
+    //}
+    //void RotateLeft()
+    //{
+    //    if (Input.GetKey(KeyCode.A))
+    //    {
+    //        rb2D.AddTorque(torque,ForceMode2D.Force);
+    //    }
+    //}
+    void CharacterRotator()
     {
-       if (Input.GetKey(KeyCode.D))
-        {
-            rb2D.AddTorque(-torque,ForceMode2D.Force);
-        }
-    }
-    void RotateLeft()
-    {
-        if (Input.GetKey(KeyCode.A))
-        {
-            rb2D.AddTorque(torque,ForceMode2D.Force);
-        }
+        float horizontalForce = -Input.GetAxis("Horizontal")*torqueMultipler;
+        rb2D.AddTorque(horizontalForce,ForceMode2D.Force);
+        
     }
 }
