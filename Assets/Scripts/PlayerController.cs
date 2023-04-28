@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
     void Jump()
     {
         _isGrounded = onur.GetComponentInChildren<GroundCheck>().IsGrounded;
+        
         //Debug.Log("DoubleJump = " + doubleJump);
         if (canJump)
         {
@@ -54,20 +55,6 @@ public class PlayerController : MonoBehaviour
             canJump = false;
         }
     }
-    //void RotateRight()
-    //{
-    //   if (Input.GetKey(KeyCode.D))
-    //    {
-    //        rb2D.AddTorque(-torque,ForceMode2D.Force);
-    //    }
-    //}
-    //void RotateLeft()
-    //{
-    //    if (Input.GetKey(KeyCode.A))
-    //    {
-    //        rb2D.AddTorque(torque,ForceMode2D.Force);
-    //    }
-    //}
     void CharacterRotator()
     {
         float horizontalForce = -Input.GetAxis("Horizontal")*torqueMultipler;
@@ -75,5 +62,10 @@ public class PlayerController : MonoBehaviour
     }
     void PlayerAddForce()
     {
+        //Debug.Log("isGrounded = " +  _isGrounded);
+        if (_isGrounded)
+        { 
+            rb2D.AddForce(new Vector2(forceAmountX, 0));
+        }
     }
 }

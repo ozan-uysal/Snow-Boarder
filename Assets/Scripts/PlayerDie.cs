@@ -10,12 +10,13 @@ public class PlayerDie : MonoBehaviour
     
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("dead bcs of this : " + other.name+ " hits to brain :)");
-        
-
-        PlayerDieMethod();
-        Debug.Log("reload Starting");
-        Invoke("ReloadScene",3);
+        if (other.gameObject.name != "FinishPoint")
+        {
+            Debug.Log("dead bcs of this : " + other.name + " hits to brain :)");
+            PlayerDieMethod();
+            Debug.Log("You dead so reload Starting");
+            Invoke("ReloadScene", 3);
+        }
     }
     void ReloadScene()
     {

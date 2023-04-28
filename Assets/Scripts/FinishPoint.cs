@@ -21,6 +21,7 @@ public class FinishPoint : MonoBehaviour
     {
         label.enabled = true;
         collided = true;
+        Debug.Log("You did well :). Reload starting!!!");
         StartCoroutine(WaitReloadScene());
     }
     IEnumerator WaitReloadScene()
@@ -29,6 +30,7 @@ public class FinishPoint : MonoBehaviour
 
         if (collided)
         {
+            
             ReloadScene();
         }
     }
