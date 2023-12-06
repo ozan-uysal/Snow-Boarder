@@ -9,6 +9,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Rigidbody2D rb2D;
     bool _isGrounded;
     [SerializeField] GameObject onur;
+
+    SurfaceEffector2D surfaceEffector2D;
+
+    [SerializeField] ParticleSystem particleEffect;
     bool doubleJump;
     bool canJump;
     Vector2 jumpPower;
@@ -23,6 +27,7 @@ public class PlayerController : MonoBehaviour
     {
         _isGrounded = false;
         canJump = false;
+        surfaceEffector2D = FindObjectOfType<SurfaceEffector2D>();
     }
     void FixedUpdate()
     {
@@ -32,6 +37,12 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
+        if (_isGrounded && Input.GetKeyDown(KeyCode.V))
+        {
+            forceAmountX = forceAmountX * 2;
+            Debug.Log("v pressed");
+        }
+
         jumpPower = new Vector2(0, forceAmountY);
 
         if (_isGrounded && !Input.GetButton("Jump"))
@@ -41,6 +52,13 @@ public class PlayerController : MonoBehaviour
         if ((Input.GetButtonDown("Jump") && _isGrounded) || (Input.GetButtonDown("Jump") && doubleJump))
         {
             canJump = true;
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.tag =="Finish")
+        {
+           particleEffect.Play();
         }
     }
     void Jump()
@@ -67,5 +85,6 @@ public class PlayerController : MonoBehaviour
         { 
             rb2D.AddForce(new Vector2(forceAmountX, 0));
         }
-    }
+      
+    }  
 }

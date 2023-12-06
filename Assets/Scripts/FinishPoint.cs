@@ -9,20 +9,26 @@ using UnityEngine.SceneManagement;
 public class FinishPoint : MonoBehaviour
 {
     public TextMeshProUGUI label;
-    FinishPoint instance;
+    [SerializeField] ParticleSystem finishEffect;
+    
     bool collided = false;
     int currentScene;
     float timer=3f;
     void Start()
     {
-        instance = this;
+       
     }
     void OnTriggerEnter2D(Collider2D other)
     {
         label.enabled = true;
         collided = true;
         Debug.Log("You did well :). Reload starting!!!");
-        StartCoroutine(WaitReloadScene());
+        
+        if(other.tag == "Player")
+        {
+            finishEffect.Play();
+            StartCoroutine(WaitReloadScene());
+        }
     }
     IEnumerator WaitReloadScene()
     {
